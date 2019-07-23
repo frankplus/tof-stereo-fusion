@@ -1,0 +1,358 @@
+\documentclass[12pt,a4paper,oneside,italian]{book} %twoside,
+
+% Usare "oneside" invece di "twoside"
+% nelle bozze, per risparmiare carta:
+% "twoside" produce diverse pagine bianche
+% alla fine dei capitoli.
+
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage[T1]{fontenc}
+
+%interlinea 1.5
+\linespread{1.5}
+
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   % Se nella tesi si inseriscono dei passi in un'altra       %
+   % lingua (inglese, per fissare le idee), si puo' istruire  %
+   % il TeX di sillabare quella parte di testo con le regole  %
+   % inglesi, invece che italiane. A questo scopo basta       %
+   % scrivere                                                 %
+   %                                                          %
+   %    \documentclass[...,english,italian,...]{...}          %
+   %                                                          %
+   % al posto di \documentclass[...,italian,...],             %
+   % dopodiche' la sillabazione sara' italiana fintanto che   %
+   % non si incontra il comando \selectlanguage{english}.     %
+   % Per tornare all'italiano si scrive                       %
+   % \selectlanguage{italian}                                 %
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% per la definizione dello stile di pagina e delle macro con le quali ridisegnare la pagina principale.
+\usepackage{unisanniotesi}
+
+% questo package è utilizzao per permettere l'utilizzo dell'ambiente algoritmic che consente di editare e formattare opportunamente frammenti di pseudocodice.
+\usepackage{algorithmic}
+
+%\usepackage{algorithm}  %algorithm serve per incapsulare algorithmic al fine di ottenere un oggetto flotable come una figura o una tabella.
+
+% Col pacchetto tocbibind compariranno nell'indice anche
+% la bibliografia ed eventualmente l'indice analitico
+\usepackage[nottoc]{tocbibind}
+
+% \usepackage{graphicx} % gia' caricato da unisanniotesi
+\graphicspath{{./figure/}}
+\usepackage{epstopdf}
+
+% Per l'ipertesto:
+% \usepackage{hyperref} % gia' caricato da unisanniotesi
+\hypersetup{
+  % pdfpagelayout=SinglePage, % default
+  % pdfpagemode=UseOutlines, % default
+  % bookmarksopen, % default
+  % bookmarksopenlevel=2, % default;
+  pdftitle={Fusione di dati Stereo e Time-of-Flight mediante tecniche di Deep Learning},
+  pdfauthor={Francesco Pham},
+  pdfsubject={Tesi sulla fusione di dati 3d da telecamere stereo e sensori Time-of-Flight mediante tecniche di Deep Learning},
+  pdfkeywords={tesi laurea fusione 3d stereo time of flight deep learning}} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{latexsym}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                    graphicx                         %
+%                                                     %
+%   Uno dei pacchetti per l'inserzione di figure      %
+%   in formato eps e` "graphicx". Ce ne sono diversi  %
+%   altri da poter scegliere.                         %
+%                                                     %
+%   Esempio di uso: avendo un file di nome            %
+%   figura1.eps questa si inserisce nella tesi        %
+%   col comando                                       %
+%                                                     %
+%        \begin{figure}[ht]                           %
+%        \begin{center}                               %
+%        \includegraphics{figura1.eps}                %
+%        \caption[nome breve]{nome lungo}             %
+%        \label{etichetta}                            %
+%        \end{center}                                 %
+%        \end{figure}                                 %
+%                                                     %
+%   Il "nome breve" e` quello che apparira`           %
+%   nell'indice delle figure ed e' opzionale.         %
+%   Il "nome lungo" e' quello che appare              %
+%   sotto la figura.                                  %
+%   (Ci sono opzioni per scalare, spostare, ruotare   %
+%   le figure).                                       %
+%   Con \graphicspath{{./figure/}} si dice            %
+%   al LaTeX di cercare le figure nella cartella      %
+%   "figure" situata allo stesso livello di           %
+%   questo documento                                  %
+%                                                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   %  Esempi di macro definite dall'utente.  %
+   %  Le prime definiscono dei comandi per   %
+   %  scrivere i caratteri speciali per      %
+   %  gli insiemi numerici fondamentali      %
+   %  (naturali, interi, razionali, reali,   %
+   %  complessi                              %
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   %  Delle macro che definiscono operatori   %
+   %  non predefiniti in LaTeX. Ogni utente   %
+   %  aggiunge quelle che servono. Questi     %
+   %  sono solo esempi arbitrari.             %
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\DeclareMathOperator{\traccia}{tr}
+\DeclareMathOperator{\sen}{sen}
+\DeclareMathOperator{\arcsen}{arcsen}
+\DeclareMathOperator*{\maxlim}{max\,lim}
+\DeclareMathOperator*{\minlim}{min\,lim}
+\DeclareMathOperator*{\deepinf}{\phantom{\makebox[0pt]{p}}inf}
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Esempi di macro piu` elaborate,          %
+    % contenenti degli argomenti.              %
+    % Compongono gli indici delle sommatorie   %
+    % e delle produttorie in modo diverso      %
+    % da quello standard del TeX. Dovrebbero   %
+    % funzionare bene quando gli estremi della %
+    % sommatoria sono piccoli. Chi volesse     %
+    % usarle estesamente farebbe bene a        %
+    % lavorarci sopra.                         %
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\varsum}[3]{\sum_{#2}^{#3}\!
+   {\vphantom{\sum}}_{#1}\;}
+\newcommand{\varprod}[3]{\sum_{#2}^{#3}\!
+   {\vphantom{\sum}}_{#1}\;}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %          Numerazione delle formule                  %
+  % Se non specificato altrimenti, il LaTeX numera le   %
+  % formule come (capitolo.formula) (per esempio (2.5)  %
+  % e` la quinta formula del secondo capitolo).         %
+  % Con le istruzioni seguenti invece la numerazione    %
+  % diventa (capitolo.sezione.formula) (per esempio     %
+  % (3.2.6) e` la sesta formula della seconda sezione   %
+  % del terzo capitolo):                                %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\makeatletter
+%\@addtoreset{equation}{section}
+%\makeatother
+%\renewcommand{\theequation}%
+%  {\thesection.\arabic{equation}}
+
+
+              %%%%%%%%%%%%%%%%%%%%%%%%%%
+              % Stile degli enunciati  %
+              %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Con le dichiarazioni seguenti                           %
+% teoremi, definizioni, proposizioni, lemmi e corollari   %
+% vengono numerati capitolo per capitolo e con un         %
+% contatore unico per tutti (per esempio, se subito dopo  %
+% il Teorema 2.1 c'e' una definizione, questa sara'       %
+% Definizione 2.2)                                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\theoremstyle{plain}
+\newtheorem{teorema}{Teorema}[chapter]
+\newtheorem{proposizione}[teorema]{Proposizione}
+\newtheorem{lemma}[teorema]{Lemma}
+\newtheorem{corollario}[teorema]{Corollario}
+
+\theoremstyle{definition}
+\newtheorem{definizione}[teorema]{Definizione}
+\newtheorem{esempio}[teorema]{Esempio}
+
+\theoremstyle{remark}
+\newtheorem{osservazione}[teorema]{Osservazione}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % I comandi si usano cosi`:                            %
+  %                                                      %
+  %   \begin{teorema}[di Pitagora]                       %
+  %   La somma dei quadrati ecc.                         %
+  %   \end{teorema}                                      %
+  %                                                      %
+  % Le parole "di Pitagora" fra parentesi quadre         %
+  % sono facoltative. Non bisogna inserire               %
+  % manualmente degli spazi prima e dopo gli enunciati,  %
+  % perche' e` automatico!                               %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % Il pacchetto amsthm definisce anche l'ambiente "proof"     %
+  % per le dimostrazioni.                                      %
+  % Esempio di uso:                                            %
+  %                                                            %
+  %   \begin{proof}                                            %
+  %   Sia $X$ un insieme ecc.                                  %
+  %   \end{proof}                                              %
+  %                                                            %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+       %                   makeidx                           %
+       %                                                     %
+       % Pacchetto per la generazione automatica dell'indice %
+       % analitico. Per esempio, se vogliamo che la parola   %
+       % "analitico" venga indicizzata nella frase           %
+       %                                                     %
+       %    "un metodo analitico di soluzione"               %
+       %                                                     %
+       % bisogna scrivere                                    %
+       %                                                     %
+       %    "un metodo analitico\index{analitico} di         %
+       %              soluzione".                            %
+       %                                                     %
+       % Compilando il file, il LaTeX produrra' un file      %
+       % ausiliario che termina con ".idx". Bisogna far      %
+       % processare questo file idx dal programma            %
+       % ausiliario "bibtex", che produrra' a sua volta un   %
+       % altro file ancora. Dare infine un'ultima passata    %
+       % col LaTeX. Si puo' tranquillamente lasciare         %
+       % la compilazione dell'indice verso la fine della     %
+       % stesura del lavoro, quando tutto e' ormai quasi     %
+       % definitivo.                                         %
+       %                                                     %
+       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{makeidx}
+\makeindex
+
+% Ridefiniamo la riga di testa delle pagine:
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+% per la documentazione on line sul package fancyhdr: http://www.ctan.org/tex-archive/info/italian/fancyhdr/itfancyhdr.pdf
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyhf{}
+\fancyhead[LE,RO]{\bfseries\thepage}
+\fancyhead[LO]{\bfseries\rightmark}
+\fancyhead[RE]{\bfseries\leftmark}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\headheight}{14.5pt}
+
+               %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+               %  Informazioni generali sulla Tesi  %
+               %    da usare nell'intestazione      %
+               %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% definiamo una serie di macro generali che poi potranno essere riutilizzate.
+  \titolo{Fusione di dati \\Stereo e Time-of-Flight mediante \\tecniche di Deep Learning}
+  \laureando{Francesco Pham}
+  \annoaccademico{2018-2019}
+  \facolta{Ingegneria dell'Informazione} % (default)
+%  \corsodilaurea{NomeCorsoDiLaurea} % per la laurea vecchio ordinamento
+ \corsodilaureatriennale{Ingegneria Informatica}
+% \corsodilaureaspecialistica{NomeCorsoDiLaureaSpecialistica}
+  \relatore[Prof.]{Pietro Zanuttigh}
+	
+	% in questo caso la macro usa di default il titolo di prof... per altri usi utilizzare []
+  %\correlatore[]{}
+% \correlatoreDue{Secondo Correlatore}
+  \dedica{Ai miei genitori, \\che mi hanno sempre sostenuto.} % (facoltativo)
+
+
+   %%%                                    %        %%    %%
+  %   %                                   %         %     %
+  %      %%%  % %%  %%%%   %%%         %%%%  %%%    %     %    %%%%
+  %     %   % %%  % %   % %   %       %   % %   %   %     %   %   %
+  %     %   % %     %   % %   %       %   % %%%%%   %     %   %   %
+  %   % %   % %     %   % %   %       %   % %       %     %   %  %%
+   %%%   %%%  %     %%%%   %%%         %%%%  %%%%  %%%   %%%   %% %
+                    %
+                    %
+
+
+                          %%%%%               %
+                            %
+                            %    %%%   %%%%  %%
+                            %   %   % %       %
+                            %   %%%%%  %%%    %
+                            %   %         %   %
+                            %    %%%% %%%%   %%%
+
+
+\begin{document}
+
+         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+         %                 Intestazione                  %
+         %                                               %
+         % Per l'intestazione completa bisogna  essersi  %
+         % procurati il file "unisannioLogo.eps"         %
+         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\frontmatter
+\maketitle
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %   Si puo` scegliere fra scrivere tutta la tesi in un    %
+  %   solo file, oppure distribuire ogni capitolo in un     %
+  %   file a parte. Qui si e` scelto tenere separati i      %
+  %   vari capitoli, che vengono caricati con \include      %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\theequation}{\arabic{equation}}%consigliato per migliorare i numeri di equazione nell'introduzione
+\renewcommand{\thesection}{\arabic{section}}  %consigliato per migliorare i numeri di equazione nell'introduzione
+
+
+%\input{abstract}
+%\input{introduzione}
+
+\tableofcontents
+%\listoffigures
+
+\mainmatter
+
+\renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}} %si torna alle formule numerate come da default
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}} %consigliato per migliorare i numeri di equazione nell'introduzione
+
+\input{capitolo1}
+\input{capitolo2}
+\input{capitolo3}
+\input{capitolo4}
+\input{capitolo5}
+
+
+%\appendix
+
+%\input{appendici}
+
+\backmatter
+
+%\addcontentsline{toc}{chapter}{Bibliografia}
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{tesi}
+
+% si può scegliere di utilizzare direttamente l'imput di un file 'biblio.tex' da editare a mano.
+%\input{biblio}
+
+\printindex % se si fa l'indice analitico.
+
+\end{document}
+

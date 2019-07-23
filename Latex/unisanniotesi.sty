@@ -1,0 +1,156 @@
+%Modified in 2008-07-24 by Davide De Pasquale. 
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{unisanniotesi}[2008/07/24 Redefines maketitle for Sannio University, and sets a binding offset of 1cm; written by Gianluca Gorni]
+\RequirePackage{ifthen}
+\RequirePackage[pdftex]{graphicx} %con pdftex posso caricare immagini PNG nel documento latex
+\RequirePackage{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Per allontanare la parte stampata %
+% dal margine della rilegatura:     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[bindingoffset=1cm]{geometry}
+
+
+\hypersetup{pdfpagelayout=SinglePage,
+pdfpagemode=UseOutlines,
+bookmarksopen,
+bookmarksopenlevel=2,
+pdftitle=Tesi di Laurea,
+pdfauthor=Tesista,
+pdfsubject=Tesi di Laurea,
+pdfkeywords=tesi laurea LaTeX}
+
+% definizione di macro
+\newcommand{\@facolta}{Ingegneria}
+% il punto interrogativo implica attesa di input
+\newcommand{\@corsodilaurea}{?}
+\newcommand{\@corsodilaureatriennale}{?}
+\newcommand{\@corsodilaureaspecialistica}{?}
+\newcommand{\@triennaleOspecialistica}{?}
+\newcommand{\@titolo}{Senza Titolo}
+\newcommand{\@annoaccademico}{?}
+\newcommand{\@relatore}{?}
+\newcommand{\@correlatore}{?}
+\newcommand{\@correlatoreDue}{?}
+\newcommand{\@laureando}{?}
+\newcommand{\@laureanda}{?}
+\newcommand{\@autore}{}
+\newcommand{\@laureandoOlaureanda}{?}
+\newcommand{\@dedica}{?}
+
+% definizione e specifica delle macro... tra parentesi quadre il numero di argomenti attesi.
+\newcommand{\facolta}[1]{%
+  \renewcommand{\@facolta}{#1}}
+\newcommand{\corsodilaurea}[1]{%
+  \renewcommand{\@corsodilaurea}{#1}%
+  \renewcommand{\@triennaleOspecialistica}{\ignorespaces}}
+\newcommand{\corsodilaureatriennale}[1]{%
+  \renewcommand{\@corsodilaurea}{#1}%
+  \renewcommand{\@triennaleOspecialistica}{Triennale }}
+\newcommand{\corsodilaureaspecialistica}[1]{%
+  \renewcommand{\@corsodilaurea}{#1}%
+  \renewcommand{\@triennaleOspecialistica}{Magistrale }}
+\newcommand{\titolo}[1]{%
+  \renewcommand{\@titolo}{\uppercase{#1}}}
+\newcommand{\annoaccademico}[1]{%
+  \renewcommand{\@annoaccademico}{#1}}
+\newcommand{\relatore}[2][Prof.]{%
+  \renewcommand{\@relatore}{#1 \uppercase{#2}}}
+\newcommand{\correlatore}[2][Prof.]{%
+  \renewcommand{\@correlatore}{#1 \uppercase{#2}}}
+\newcommand{\correlatoreDue}[2][Prof.]{%
+  \renewcommand{\@correlatoreDue}{#1 \uppercase{#2}}}
+\newcommand{\laureando}[1]{%
+  \renewcommand{\@laureando}{\uppercase{#1}}%
+  \renewcommand{\@autore}{\uppercase{#1}}%
+  \renewcommand{\@laureandoOlaureanda}{Laureando}}
+\newcommand{\laureanda}[1]{%
+  \renewcommand{\@laureanda}{\uppercase{#1}}%
+  \renewcommand{\@autore}{\uppercase{#1}}%
+  \renewcommand{\@laureandoOlaureanda}{Laureanda}}
+\newcommand{\dedica}[1]{%
+  \renewcommand{\@dedica}{#1}}
+\newcommand{\data}[1]{\date{#1}}
+
+\newcommand{\clearemptydoublepage}{\newpage{\pagestyle{empty}%
+  \cleardoublepage}}
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %                                   %
+    %  Formattazione dell'intestazione  %
+    %  della tesi                       %
+    %                                   %
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand\maketitle{\begin{titlepage}
+\begin{sffamily}
+	\begin{large}
+		\begin{center}
+			\vbox to0pt{%
+			\vbox to\textheight{\vfil
+			\includegraphics[width=\textwidth]{unipd-light.png}%
+			\vfil}\vss}
+		\end{center}
+		\begin{center}
+        	\begin{figure}
+        		\centering
+        		\includegraphics[height=2.5cm]{unipd-bn}
+        	\end{figure}
+			\begin{Large}
+				\uppercase{Universit\`a degli Studi di Padova}
+			\end{Large}\\
+			\rule{9cm}{.4pt}\\
+			\smallskip
+			%Facolt\`a di \@facolta\\
+            Dipartimento di \@facolta\\
+			\medskip
+			Corso di Laurea \@triennaleOspecialistica in
+			\@corsodilaurea\\
+			\bigskip\vfill
+			\begin{Large} Tesi di Laurea \end{Large}\\
+			\bigskip
+			\bigskip
+			{\vfil
+				\begin{Huge}
+				{\renewcommand{\\}{\cr}
+				\halign{\hbox to\textwidth{\strut\hfil##\hfil}\cr
+				\@titolo\cr}}
+				\end{Huge}}
+			\bigskip\vfill
+			\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}l@{}}
+				Relatore:&\@laureandoOlaureanda:\\
+				\vtop{\halign{\strut\hfil##\hfil\cr
+				\@relatore\cr}}&%
+				\vtop{\halign{\strut\hfil##\hfil\cr
+				\@autore\cr}}%
+			\end{tabular*}
+		\end{center}
+		\ifthenelse{\equal{\@correlatore}{?}}{}%
+		{\noindent \ifthenelse{\equal{\@correlatoreDue}{?}}%
+        {Correlatore}{Correlatori}:\newline
+		\vtop{\halign{\strut##\hfil\cr
+		\@correlatore%\cr%
+		\ifthenelse{\equal{\@correlatoreDue}{?}}%
+        {\cr}{\cr\@correlatoreDue\cr}}}}%
+		\begin{center}
+			\vfill
+			\rule{9cm}{.4pt}\\
+			\medskip
+			\uppercase{Anno Accademico \@annoaccademico}\\
+		\end{center}
+	\end{large}
+\end{sffamily}
+\clearemptydoublepage
+\ifthenelse{\equal{\@dedica}{?}}{}{%
+\pagestyle{empty}
+	\null\vfil
+	\begin{Large}
+		\begin{center}
+			\@dedica
+		\end{center}
+		\vfil\vfil\clearemptydoublepage}
+	\end{Large}
+\end{titlepage}}
+
+\endinput
