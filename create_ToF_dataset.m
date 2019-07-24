@@ -40,12 +40,13 @@ index_history = [];
 for i = 0:39
     if isempty(find(validation_set_indices-i==0)) == 1
         
-        load(strcat(reprojected_dataset_root,'train/stereo_disparity_maps/scene_',num2str(i,'%05.4u'),'_disparity_stereo_dx.mat'),'disparity_stereo_dx')
-        load(strcat(reprojected_dataset_root,'train/tof_disparity_reprojected/scene_',num2str(i,'%05.4u'),'_MHz120_disparity_reprojected.mat'),'disparity_120_PU_rp')
-        load(strcat(reprojected_dataset_root,'train/amplitude_reprojected/scene_',num2str(i,'%05.4u'),'_MHz120_amplitude_reprojected.mat'),'amplitude_120_rp')
-        load(strcat(reprojected_dataset_root,'train/disparity_ground_truth_halfResolution/scene_',num2str(i,'%05.4u'),'_disparity_stereo_dx_GT.mat'),'disparity_GT')
+        load(strcat(reprojected_dataset_root,'/scene_',num2str(i,'%05.4u'),'_ZEDdxDisparity.mat'),'disparity_ZEDdx')
+        load(strcat(reprojected_dataset_root,'/scene_',num2str(i,'%05.4u'),'_ToFDisparity.mat'),'disparity_ToF')
+        load(strcat(reprojected_dataset_root,'/scene_',num2str(i,'%05.4u'),'_ToFamplitude.mat'),'amplitude_ToF')
+        load(strcat(reprojected_dataset_root,'/scene_',num2str(i,'%05.4u'),'_zed_diff.mat'),'zed_diff')
+        load(strcat(reprojected_dataset_root,'/scene_',num2str(i,'%05.4u'),'_GT_Disparity.mat'),'disparity_GT')
         
-        feature = cat( 3, disparity_stereo_dx, disparity_120_PU_rp, amplitude_120_rp);
+        feature = cat( 3, disparity_ZEDdx, disparity_ToF, amplitude_ToF, zed_diff);
         
         % Crop data to remove not valid points
         feature = feature(crop_size+1:end-crop_size,crop_size+1:end-crop_size,:);
@@ -75,12 +76,13 @@ test_label = [];
 for i = 0:14
     feature = [];
     
-    load(strcat(reprojected_dataset_root,'test/stereo_disparity_maps/test_scene_',num2str(i,'%05.4u'),'_disparity_stereo_dx.mat'),'disparity_stereo_dx')
-    load(strcat(reprojected_dataset_root,'test/tof_disparity_reprojected/test_scene_',num2str(i,'%05.4u'),'_MHz120_disparity_reprojected.mat'),'disparity_120_PU_rp')
-    load(strcat(reprojected_dataset_root,'test/amplitude_reprojected/test_scene_',num2str(i,'%05.4u'),'_MHz120_amplitude_reprojected.mat'),'amplitude_120_rp')
-    load(strcat(reprojected_dataset_root,'test/disparity_ground_truth_halfResolution/test_scene_',num2str(i,'%05.4u'),'_disparity_stereo_dx_GT.mat'),'disparity_GT')
+    load(strcat(reprojected_dataset_root,'/test_scene_',num2str(i,'%05.4u'),'_ZEDdxDisparity.mat'),'disparity_ZEDdx')
+    load(strcat(reprojected_dataset_root,'/test_scene_',num2str(i,'%05.4u'),'_ToFDisparity.mat'),'disparity_ToF')
+    load(strcat(reprojected_dataset_root,'/test_scene_',num2str(i,'%05.4u'),'_ToFamplitude.mat'),'amplitude_ToF')
+    load(strcat(reprojected_dataset_root,'/test_scene_',num2str(i,'%05.4u'),'_zed_diff.mat'),'zed_diff')
+    load(strcat(reprojected_dataset_root,'/test_scene_',num2str(i,'%05.4u'),'_GT_Disparity.mat'),'disparity_GT')
     
-    feature = cat( 3, disparity_stereo_dx, disparity_120_PU_rp, amplitude_120_rp);
+    feature = cat( 3, disparity_ZEDdx, disparity_ToF, amplitude_ToF, zed_diff);
     
     % Crop data to remove not valid points
     feature = feature(crop_size+1:end-crop_size,crop_size+1:end-crop_size,:);
@@ -98,12 +100,13 @@ num_im = 1;
 for i = validation_set_indices
     feature = [];
     
-    load(strcat(reprojected_dataset_root,'train/stereo_disparity_maps/scene_',num2str(i,'%05.4u'),'_disparity_stereo_dx.mat'),'disparity_stereo_dx')
-    load(strcat(reprojected_dataset_root,'train/tof_disparity_reprojected/scene_',num2str(i,'%05.4u'),'_MHz120_disparity_reprojected.mat'),'disparity_120_PU_rp')
-    load(strcat(reprojected_dataset_root,'train/amplitude_reprojected/scene_',num2str(i,'%05.4u'),'_MHz120_amplitude_reprojected.mat'),'amplitude_120_rp')
-    load(strcat(reprojected_dataset_root,'train/disparity_ground_truth_halfResolution/scene_',num2str(i,'%05.4u'),'_disparity_stereo_dx_GT.mat'),'disparity_GT')
+    load(strcat(reprojected_dataset_root,'/scene_',num2str(i,'%05.4u'),'_ZEDdxDisparity.mat'),'disparity_ZEDdx')
+    load(strcat(reprojected_dataset_root,'/scene_',num2str(i,'%05.4u'),'_ToFDisparity.mat'),'disparity_ToF')
+    load(strcat(reprojected_dataset_root,'/scene_',num2str(i,'%05.4u'),'_ToFamplitude.mat'),'amplitude_ToF')
+    load(strcat(reprojected_dataset_root,'/scene_',num2str(i,'%05.4u'),'_zed_diff.mat'),'zed_diff')
+    load(strcat(reprojected_dataset_root,'/scene_',num2str(i,'%05.4u'),'_GT_Disparity.mat'),'disparity_GT')
     
-    feature = cat( 3 ,disparity_stereo_dx ,disparity_120_PU_rp, amplitude_120_rp);
+    feature = cat( 3, disparity_ZEDdx, disparity_ToF, amplitude_ToF, zed_diff);
 
     % Crop data to remove not valid points
     feature = feature(crop_size+1:end-crop_size,crop_size+1:end-crop_size,:,:);

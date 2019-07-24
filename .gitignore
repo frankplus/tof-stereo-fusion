@@ -1,6 +1,3 @@
 dataset.mat
 reprojected_data/
-Tesi/*
-!Tesi/main.tex
-!Tesi/main.pdf
-!Tesi/makefile
+Latex/temp-dir/
