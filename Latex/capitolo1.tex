@@ -14,18 +14,50 @@ Il sistema di acquisizione è composto da una coppia di telecamere stereo e da u
     \centering
     \includegraphics[width=0.5\columnwidth]{tof_stereo_acquisition_system}
     \caption[Sistema di acquisizione ToF-Stereo]{Rappresentazione del sistema di acquisizione ToF-Stereo. Il sensore ToF è posizionato sotto la telecamera di riferimento della coppia stereo.}
-    \label{etichetta}
+    \label{sistema_di_acquisizione}
 \end{figure}
 
 \subsection{Sistema di visione stereo}
 Il sensore a visione stereoscopica consiste nell'acquisire due immagini bidimensionali da una coppia di telecamere rettificate, ossia allineate lungo un asse che inquadrano la stessa scena. Lo stesso punto P dello spazio viene proiettato nel piano dell'immagine di ciascuna delle telecamere. I punti risultanti \(p_L\) e \(p_R\), detti \textit{omologhi}, hanno le stesse coordinate verticali, considerata la rettificazione dei sensori. Viene chiamata \textit{disparità} lo scostamento tra le coordinate orizzontali: \[d = u_L - u_R\] Tramite questo valore è possibile determinare la posizione del punto P nello spazio.\\
 Uno dei principali vantaggi è il costo ridotto delle telecamere CCD o CMOS, facilmente accessibili nel mercato. Tale sensore è inoltre passivo, quindi può sfruttare l’illuminazione dell’ambiente. Ciò permette di essere utilizzato in ambienti esterni, al contrario di altri sensori che sfruttano
 pattern proiettati con illuminatori. Inoltre può avere alte risoluzioni e una limitata quantità di rumore.\\
-Lo svantaggio maggiore è la dipendenza dei risultati forniti da questi sensori dalla tessitura delle immagini utilizzata nel calcolo degli omologhi, ad esempio uno sfondo uniforme o ripetitivo è difficilmente individuabile. Pertanto essi presentano un’accuratezza solitamente limitata.
+Lo svantaggio maggiore è la dipendenza dei risultati forniti da questi sensori dalla tessitura delle immagini utilizzata nel calcolo degli omologhi, ad esempio sono evidenti delle difficoltà nell'analisi di scene con pattern uniformi o ripetitivi. Pertanto essi presentano un’accuratezza solitamente limitata.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\columnwidth]{ZED}
+    \caption[Sensore di visione stereo]{Sensore stereo ZED}
+    \label{zed}
+\end{figure}
 
 \subsection{Sensore Time-Of-Flight}
+Il sensore ToF determina le informazioni riguardo la profondità sulla base del fatto che le onde elettromagnetiche viaggiano alla velocità \(c\approx3\times 10^8[m/s]\). Il sensore emette un impulso luminoso (tipicamente infrarosso) il quale colpisce la scena e viene riflesso indietro. Viene dunque misurato il tempo $\tau$ che occorre al segnale luminoso per percorrere un tragitto pari al doppio della distanza dell'oggetto dalla telecamera $\rho$. La relazione che lega $\rho$ e $\tau$ è $$\rho=\frac{c\tau}{2}$$
+Per misurare il tempo cercato e migliorare la risoluzione del sensore, l'impulso emesso è modulato secondo un segnale sinusoidale, così che anche l'eco abbia lo stesso andamento, ma
+sfasato e attenuato in ampiezza.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.4\columnwidth]{time-of-flight}
+    \caption[Principio time-of-flight]{Segnale sinusoidale trasmesso e corrispondente segnale ricevuto da un sensore ToF}
+    \label{tof}
+\end{figure}\\
+Dispositivi ToF costituiti da un singolo trasmettitore e un singolo ricevitore, vengono tipicamente utilizzati in telemetri laser. Al fine di realizzare una mappa bidimensionale dell'ambiente, un sistema è quello di montare il sensore su una piattaforma roteante, tale configurazione ha trovato l'utilizzo nel campo dell'automobilistica. Il sistema utilizzato in questo lavoro di tesi appartiene bensì alla famiglia dei sensori ToF scanner-less chiamati anche ToF camera.\\
+Nelle ToF camera, gli impulsi luminosi sono segnali infrarossi inviati tramite LED e il ricevitore è una matrice di sensori CCD/CMOS. Diversamente dal meccanismo di tipo scanner, le ToF camera catturano le geometrie della scena in un singolo scatto nella quale ogni pixel misura, indipendentemente dalle altre, la distanza del punto della scena di fronte.\\
+I vantaggi maggiori sono, al contrario delle telecamere stereo, l'indipendenza dal contenuto della scena, e la maggiore rapidità poichè non richiede algoritmi particolari per il calcolo della disparità. \\
+Tuttavia, la tecnologia non è esente da alcune limitazioni: 
+\begin{itemize}
+    \item Per superfici poco riflettenti o di colore scuro, il segnale di ritorno è debole, ciò risulta in misure poco accurate. 
+    \item La limitata risoluzione spaziale non permette di ricavare una informazione dettagliata della geometria della scena.
+    \item Il "multipath error" è un ulteriore problema che appare tipicamente vicino alle zone di incidenza tra le superfici. Esso è provocato dalla riflessione multipla del segnale luminoso prima di raggiungere il sensore. 
+\end{itemize}
 
-\section{Il Machine learning}
+\section{Il Machine Learning}
+Il machine learning, o apprendimento automatico, è una branca dell'informatica che fornisce ai computer la capacità di imparare ad eseguire un task da una certa esperienza, senza essere esplicitamente programmati a farlo. In sostanza, il machine learning esplora l'utilizzo di metodi matematico-computazionali per apprendere informazioni direttamente dai dati, senza modelli matematici ed equazioni predeterminate. Gli algoritmi di apprendimento automatico migliorano le loro prestazioni in modo "adattivo" mano a mano che gli "esempi" da cui apprendere aumentano. \\
+I problemi che il machine learning punta a risolvere vengono classificati in tre categorie:
+\begin{itemize}
+    \item \textbf{Apprendimento supervisionato}: ogni istanza del set di esempi (training set) presenta gli input e i corrispondenti valori attesi in output. Questi esempi vengono presentati uno per volta alla macchina, il quale deve essere in grado di approssimare l'esatta natura della relazione presente tra l'input e il corrispondente output. L’obiettivo finale è dunque quello di insegnare al modello la capacità di predire correttamente i valori attesi su un set di istanze non presenti nel training set (test set). Questo scenario è quello trattato in questo lavoro di tesi.
+    \item \textbf{Apprendimento non supervisionato}: al contrario dell'apprendimento supervisionato, gli output corrispondenti agli input forniti non sono conosciuti. All'algoritmo viene presentato bensì numerosi dati dai quali la macchina deve estrarre le caratteristiche o i pattern nascosti. 
+    \item \textbf{Apprendimento per rinforzo}: si basa sul presupposto di potere ricevere degli stimoli dall'esterno a seconda delle scelte dell'algoritmo. Contrariamente all’apprendimento supervisionato nella quale si conosce l’uscita corretta che il sistema deve dare, l’apprendimento per rinforzo viene adoperato quando si ha a disposizione solamente di un’informazione qualitativa (giusto/sbagliato, successo/fallimento), chiamata segnale di rinforzo.
+\end{itemize}
 
 \subsection{Reti neurali artificiali}
 
