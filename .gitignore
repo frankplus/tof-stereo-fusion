@@ -1,3 +1,6 @@
 dataset.mat
 reprojected_data/
 Latex/temp-dir/
+Latex/main.*
+!Latex/main.tex
+!Latex/main.pdf
