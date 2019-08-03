@@ -40,11 +40,12 @@ sfasato e attenuato in ampiezza.
     \caption[Principio time-of-flight]{Segnale sinusoidale trasmesso e corrispondente segnale ricevuto da un sensore ToF}
     \label{tof}
 \end{figure}\\
-Dispositivi ToF costituiti da un singolo trasmettitore e un singolo ricevitore, vengono tipicamente utilizzati in telemetri laser. Al fine di realizzare una mappa bidimensionale dell'ambiente, un sistema è quello di montare il sensore su una piattaforma roteante, tale configurazione ha trovato l'utilizzo nel campo dell'automobilistica. Il sistema utilizzato in questo lavoro di tesi appartiene bensì alla famiglia dei sensori ToF scanner-less chiamati anche ToF camera.\\
+Dispositivi ToF costituiti da un singolo trasmettitore e un singolo ricevitore, vengono tipicamente utilizzati in telemetri laser. Al fine di realizzare una mappa bidimensionale dell'ambiente, un sistema è quello di montare il sensore su una piattaforma roteante, tale configurazione ha trovato l'utilizzo nel campo dell'automobilistica. Il sistema utilizzato in questo lavoro di tesi appartiene bensì alla famiglia dei sensori ToF scanner-less chiamati anche ToF camera.
+\paragraph{ToF camera}
 Nelle ToF camera, gli impulsi luminosi sono segnali infrarossi inviati tramite LED e il ricevitore è una matrice di sensori CCD/CMOS. Diversamente dal meccanismo di tipo scanner, le ToF camera catturano le geometrie della scena in un singolo scatto nella quale ogni pixel misura, indipendentemente dalle altre, la distanza del punto della scena di fronte.
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.4\columnwidth]{kinect}
+    \includegraphics[width=0.3\columnwidth]{kinect}
     \caption[Microsoft kinect]{Il Microsoft Kinect è un esempio di ToF Camera}
     \label{zed}
 \end{figure}\\
@@ -78,12 +79,40 @@ Le reti neurali artificiali (in inglese \textit{artificial neural network}, ANN)
 Il più semplice modello dei neuroni artificiali è il \textit{percettrone}. 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.6\columnwidth]{perceptron}
+    \includegraphics[width=0.5\columnwidth]{perceptron}
     \caption[Percettrone]{Schema di un percettrone}
     \label{biological_neuron}
 \end{figure}
 Esso prende in input un vettore di valori reali e ne effettua una combinazione lineare, il risultato viene infine passato ad una funzione, detta funzione di attivazione, che restituisce l'output del neurone. Il modello complessivo può essere descritto dalla seguente formula: 
 $$y=\sigma(\sum_{i} w_{i}x_{i}+b)$$
 dove $w_{i}$ sono i pesi e b è un termine, detto bias, che viene aggiunto in seguito. Nel percettrone classico la funzione di attivazione $\sigma$ è una funzione a gradino, tuttavia sono numerose le alternative: tra i più comuni sono il sigmoide e il rettificatore.
+\paragraph{Deep Neural Network} 
+Le reti neurali artificiali sono tipicamente organizzati in più strati, i nodi che la compongono sono suddivisi in tre macro-categorie. Abbiamo i nodi appartenenti allo strato di ingresso (input), i nodi appartenenti allo strato di uscita (output) e infine i nodi degli strati nascosti (hidden). L’architettura per strati è tipica delle reti neurali feed-forward. Tali reti sono caratterizzate dal fatto che l’attivazione dei nodi d’ingresso si propaga in avanti verso quelli dello strato (o degli strati) nascosto e da questi verso quelli dello strato di uscita.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\columnwidth]{DNN}
+    \caption[Deep Neural Network]{Rappresentazione di una rete neurale profonda}
+    \label{DNN}
+\end{figure}
 
 \subsection{Reti neurali convoluzionali}
+Le reti neurali visti fino ad ora sono composti da neuroni completamente interconnessi con ogni neurone del precedente e successivo strato. Ciò comporta un numero sproporzionato di pesi che devono essere gestiti all'aumentare degli strati e dei neuroni. Il problema diventa significativo dal punto di vista della memoria e del tempo di addestramento. Un altro svantaggio è l'\textit{overfitting}. Infatti, avere un grosso numero di parametri, implica che se il training set non è abbastanza grosso, la rete potrebbe imparare a discriminare perfettamente gli esempi del training set, però avere scarse prestazioni su dati nuovi.\\
+Questi problemi sono stati affrontati efficacemente con le reti neurali convoluzionali (\textit{convolutional neural network}, CNN). Differentemente dalle tradizionali reti neurali, qui i neuroni sono connessi soltanto ad un sottoinsieme dei neuroni dello strato precedente, questa regione viene definita campo recettivo (\textit{receptive field}). Questo modello si ispira alla struttura della corteccia visiva del mondo animale. Nelle CNN approssimiamo la risposta di un singolo neurone agli stimoli del proprio campo recettivo attraverso una operazione di convoluzione.
+\paragraph{Convoluzione} 
+La convoluzione viene effettuata tra l'input di uno strato e uno o più filtri, detti anche \textit{kernel}. L'output della operazione di convoluzione è detta \textit{feature map}. Ci sono tante feature map quanti sono il numero di filtri utilizzati per elaborare gli input. 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\columnwidth]{convolution}
+    \caption[Esempio di convoluzione]{illustrazione della operazione di convoluzione con un filtro}
+    \label{convolution}
+\end{figure}\\
+Il principio di convoluzione è fondamentale: oltre a mantenere limitato il numero di parametri, esso fornisce una proprietà di invarianza alla traslazione. Di fatto, lo stesso filtro viene applicato su tutta l'immagine, ciò permette di rilevare una particolarità nell'immagine ovunque essa sia, indipendentemente dalla sua posizione. 
+\paragraph{Funzioni di attivazione}
+Analogamente alle reti neurali tradizionali, anche nelle CNN vengono usate le funzioni di attivazione. Questi vengono solitamente messi immediatamente dopo gli strati di convoluzione e hanno lo scopo di permettere alla rete l'apprendimento di funzioni non lineari. 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.3\columnwidth]{relu}
+    \caption[Funzione di attivazione relu]{funzione di attivazione ReLU}
+    \label{relu}
+\end{figure}
+La funzione di attivazione più utilizzata in questo campo negli ultimi anni è il rettificatore lineare (\textit{Rectified Linear Unit}, ReLU). Questa, rispetto ad altre funzioni come la tangente iperbolica o la sigmoide, porta ad un processo di allenamento più rapido.
