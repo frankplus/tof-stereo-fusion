@@ -1,6 +1,8 @@
 \chapter{Acquisizione e pre-elaborazione dei dati}
+Come già accennato, l'addestramento delle reti neurali convoluzionali richiede un dataset. Il training set deve essere sufficientemente grande in modo che la rete possa generalizzare in modo appropriato, cioè dare risultati plausibili per input che non ha mai visto. Al momento, tuttavia, l'acquisizione accurata di dati ground truth per scene 3D reali non è una operazione immediata. Per questa ragione, in questo lavoro verrà utilizzato un dataset sintetico simulato con \textit{Blender} composto da 55 scene 3D differenti. Le scene contengono diverse problematiche di acquisizione che includono riflessi, illuminazioni globali, e pattern ripetitivi. 
 
 \section{Preparazione dei dati ToF}
+Il sensore Time-of-Flight fornisce una mappa di profondità della scena. Per poter eseguire una fusione con i dati restituiti dal sensore stereo è necessario 
 
 \subsection{Riproiezione e interpolazione}
 
