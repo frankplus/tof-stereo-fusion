@@ -1,22 +1,28 @@
 \chapter{Fusione tramite deep learning}
 
-\section{Confronti tra le varie architetture}
-Partiamo dalla seguente architettura, il quale prende come input le due mappe di disparità dai corrispettivi sensori. 
+\section{Le componenti della CNN}
+\subsection{Reti neurali residuali}
+Le reti neurali residuali, o ResNet, sono stati introdotti da Microsoft nel 2015 battendo il record della competizione ILSVRC con un errore del 3.6\%, superando per la prima volta le prestazioni umane.\\
+L'idea che sta alla base delle reti neurali residuali è l'utilizzo di un particolare tipo di blocco, il \textit{residual block}, che sfrutta il concetto delle \textit{skip connection}. \\
+Vediamo ora il modello del residual block:
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.8\columnwidth]{noamp_4conv_8filters}
-    \caption[Architettura 4 convoluzioni 8 filtri]{Una prima architettura della CNN}
+    \includegraphics[width=0.5\columnwidth]{res_block.png}
+    \caption[Residual block]{Schema del residual block}
 \end{figure}\\
-L'ultimo strato di convoluzione deve avere necessariamente un filtro in quanto deve generare una singola mappa di disparità corrispondente alla fusione degli input.\\
-La CNN è costituita da una sequenza di blocchi, dove ciascun blocco ha uno strato di convoluzione, uno di \textit{batch normalization} e infine uno strato di rettificazione lineare (\textit{ReLU}).
-\paragraph{Batch Normalization}
-Il batch normalization esegue una normalizzazione del mini-batch ad ogni sub-strato della rete. L'utilizzo del batch normalization ha l'intento di velocizzare il training della rete neurale e migliorarne la stabilità e le performance. \\
+Ogni blocco consiste in una serie di strati, ottenendo una certa $F(x)$, seguito da una \textit{skip connection} che aggiunge al risultato l'input del blocco stesso. Dunque in uscita dal blocco si ha
+$$ H(x)=F(x)+x $$
+Attraverso la concatenazione di blocchi di questo tipo, ResNet impara a predire l'output non attraverso l'apprendimento di una trasformazione diretta dei dati di input, ma attraverso l'apprendimento del termine $F(x)$, detto \textit{residuo}, da sommare al dato di input per arrivare all'output. Tale modello semplifica la costruzione di strati di identità, basta infatti spingere $F(x)$ verso zero e lasciare l'output come x. Ciò permette agli strati più profondi della rete di alterare poco i concetti già appresi dagli strati precedenti. Questa architettura ha permesso di creare reti molto più profonde, fino a 152 strati.
 
+\subsection{Batch normalization}
+\subsection{Convoluzione dilatata}
+\subsection{Convoluzioni 1x1}
 
-\section{Convoluzione dilatata}
+\section{la rete neurale selezionata}
 
-\section{Introduzione della ampiezza del segnale ToF}
-
-\section{Reti neurali residuali}
-
-\section{La rete neurale selezionata}
+\section{Il processo di training}
+\subsection{Loss function e ottimizzazione}
+\subsection{Inizializzazione delle variabili}
+\subsection{Iperparametri}
+batch size e learning rate
+\subsection{Early stopping}
