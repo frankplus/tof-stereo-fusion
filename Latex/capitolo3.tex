@@ -1,11 +1,22 @@
 \chapter{Fusione tramite deep learning}
 
-\section{Le mappe in input}
+\section{Confronti tra le varie architetture}
+Partiamo dalla seguente architettura, il quale prende come input le due mappe di disparità dai corrispettivi sensori. 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\columnwidth]{noamp_4conv_8filters}
+    \caption[Architettura 4 convoluzioni 8 filtri]{Una prima architettura della CNN}
+\end{figure}\\
+L'ultimo strato di convoluzione deve avere necessariamente un filtro in quanto deve generare una singola mappa di disparità corrispondente alla fusione degli input.\\
+La CNN è costituita da una sequenza di blocchi, dove ciascun blocco ha uno strato di convoluzione, uno di \textit{batch normalization} e infine uno strato di rettificazione lineare (\textit{ReLU}).
+\paragraph{Batch Normalization}
+Il batch normalization esegue una normalizzazione del mini-batch ad ogni sub-strato della rete. L'utilizzo del batch normalization ha l'intento di velocizzare il training della rete neurale e migliorarne la stabilità e le performance. \\
+
 
 \section{Convoluzione dilatata}
 
-\section{Reti neurali residuali}
+\section{Introduzione della ampiezza del segnale ToF}
 
-\section{Confronti tra le varie architetture}
+\section{Reti neurali residuali}
 
 \section{La rete neurale selezionata}

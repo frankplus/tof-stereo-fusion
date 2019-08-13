@@ -8,7 +8,7 @@ Nello stesso periodo, nel mondo della computer vision, il machine learning (e de
 L'obiettivo del lavoro di questa tesi è lo sviluppo di un sistema di machine learning per la fusione dei dati tridimensionali forniti dai sensori, cercando di fornire una ricostruzione più accurata. La scelta dei sensori gioca perciò un ruolo fondamentale: le telecamere stereo e il sensore ToF tendono ad avere caratteristiche complementari, e la loro combinazione si è rivelato efficace negli ultimi anni. 
 
 \section{Principi di funzionamento del sistema di acquisizione}
-Il sistema di acquisizione è composto da una coppia di telecamere stereo e da un sensore Time-of-Flight disposti adiacentemente. I due dispositivi catturano la stessa scena allo stesso istante.
+Il sistema di acquisizione è composto da una coppia di telecamere stereo e da un sensore Time-of-Flight disposti vicino. I due dispositivi catturano la stessa scena allo stesso istante.
 
 \begin{figure}[ht]
     \centering
@@ -42,14 +42,14 @@ sfasato e attenuato in ampiezza.
 \end{figure}\\
 Dispositivi ToF costituiti da un singolo trasmettitore e un singolo ricevitore, vengono tipicamente utilizzati in telemetri laser. Al fine di realizzare una mappa bidimensionale dell'ambiente, un sistema è quello di montare il sensore su una piattaforma roteante, tale configurazione ha trovato l'utilizzo nel campo dell'automobilistica. Il sistema utilizzato in questo lavoro di tesi appartiene bensì alla famiglia dei sensori ToF scanner-less chiamati anche ToF camera.
 \paragraph{ToF camera}
-Nelle ToF camera, gli impulsi luminosi sono segnali infrarossi inviati tramite LED e il ricevitore è una matrice di sensori CCD/CMOS. Diversamente dal meccanismo di tipo scanner, le ToF camera catturano le geometrie della scena in un singolo scatto nella quale ogni pixel misura, indipendentemente dalle altre, la distanza del punto della scena di fronte.
+Nelle ToF camera, gli impulsi luminosi sono segnali infrarossi inviati tramite LED che illuminano l'intera scena mentre il ricevitore è una matrice di sensori CCD/CMOS. Diversamente dal meccanismo di tipo scanner, le ToF camera catturano le geometrie della scena in un singolo scatto nella quale ogni pixel misura, indipendentemente dalle altre, la distanza del punto della scena di fronte.
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.3\columnwidth]{kinect}
-    \caption[Microsoft kinect]{Il Microsoft Kinect è un esempio di ToF Camera}
+    \caption[Microsoft Kinect]{Il Microsoft Kinect è un esempio di ToF Camera}
     \label{zed}
 \end{figure}\\
-I vantaggi maggiori sono, al contrario delle telecamere stereo, l'indipendenza dal contenuto della scena, e la maggiore rapidità poichè non richiede algoritmi particolari per il calcolo della disparità. \\
+I vantaggi maggiori sono, al contrario delle telecamere stereo, l'indipendenza dal contenuto della scena, e la maggiore rapidità poiché non richiede algoritmi particolari per il calcolo della disparità. \\
 Tuttavia, la tecnologia non è esente da alcune limitazioni: 
 \begin{itemize}
     \item Per superfici poco riflettenti o di colore scuro, il segnale di ritorno è debole, ciò risulta in misure poco accurate. 
@@ -83,7 +83,7 @@ Il più semplice modello dei neuroni artificiali è il \textit{percettrone}.
     \caption[Percettrone]{Schema di un percettrone}
     \label{biological_neuron}
 \end{figure}
-Esso prende in input un vettore di valori reali e ne effettua una combinazione lineare, il risultato viene infine passato ad una funzione, detta funzione di attivazione, che restituisce l'output del neurone. Il modello complessivo può essere descritto dalla seguente formula: 
+Esso prende in input un vettore di valori reali e ne effettua una combinazione lineare. Il risultato viene infine passato ad una funzione, detta funzione di attivazione, che restituisce l'output del neurone. Il modello complessivo può essere descritto dalla seguente formula: 
 $$y=\sigma(\sum_{i} w_{i}x_{i}+b)$$
 dove $w_{i}$ sono i pesi e b è un termine, detto bias, che viene aggiunto in seguito. Nel percettrone classico la funzione di attivazione $\sigma$ è una funzione a gradino, tuttavia sono numerose le alternative: tra i più comuni sono il sigmoide e il rettificatore.
 \paragraph{Deep Neural Network} 
