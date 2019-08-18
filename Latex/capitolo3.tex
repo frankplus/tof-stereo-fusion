@@ -2,7 +2,7 @@
 
 \section{Le componenti della CNN}
 \subsection{Reti neurali residuali}
-Le reti neurali residuali, o ResNet, sono stati introdotti da Microsoft nel 2015 battendo il record della competizione ILSVRC con un errore del 3.6\%, superando per la prima volta le prestazioni umane.\\
+Le reti neurali residuali, o ResNet, sono stati introdotti da Microsoft nel 2015 battendo il record della competizione ILSVRC con un errore del 3.6\% \cite{resnet}, superando per la prima volta le prestazioni umane.\\
 L'idea che sta alla base delle reti neurali residuali è l'utilizzo di un particolare tipo di blocco, il \textit{residual block}, che sfrutta il concetto delle \textit{skip connection}. \\
 Vediamo ora il modello del residual block:
 \begin{figure}[ht]
@@ -17,6 +17,15 @@ Attraverso la concatenazione di blocchi di questo tipo, ResNet impara a predire 
 \subsection{Batch Normalization}
 Durante il processo di addestramento, gli esempi del training set vengono processati in gruppi, detti mini-batch, di dimensione fissa per velocizzare la fase di train sfruttando il parallelismo offerto dalle GPU. La \textit{Batch Normalization} è una tecnica che consiste nel normalizzare i dati del mini-batch ad ogni strato intermedio della rete. In questo modo si riduce il così detto \textit{Internal Covariance Shift}. L'utilizzo del batch normalization ha l'intento di velocizzare il training della rete neurale e migliorarne la stabilità e le performance. Questa operazione si è rivelata particolarmente efficace nelle reti neurali residuali.
 
+\subsection{Bottleneck}
+Il modello ResNet introduce il così detto design a "collo di bottiglia". L'idea che sta dietro all'utilizzo di questo design è quello di ridurre le dimensioni dell'input del blocco residuale prima di effettuare la convoluzione 3x3.  
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.4\columnwidth]{bottleneck.png}
+    \caption[Bottleneck]{Il design a collo di bottiglia utilizzato dal  ResNet}
+\end{figure}
+La riduzione della dimensionalità viene eseguita con uno strato di convoluzione 1x1, lasciando lo strato di convoluzione 3x3 con delle dimensioni di input/output più ridotte, tenendo così un numero di parametri molto più ristretto. Infine, l'ultimo strato 1x1 ha lo scopo di ripristinare le dimensioni a quelle iniziali. Questo permette un tempo di addestramento più veloce, senza pesare sulle prestazioni \cite{resnet}.
+
 \subsection{Convoluzione dilatata}
 Il vantaggio della convoluzione dilatata è la possibilità di catturare più indizi dall'input, espandendo il campo recettivo di una convoluzione 2D. 
 \begin{figure}[ht]
@@ -26,9 +35,14 @@ Il vantaggio della convoluzione dilatata è la possibilità di catturare più in
 \end{figure}\\
 In realtà, anche utilizzando un filtro di dimensioni maggiori si ha un receptive field allargato, ad esempio una convoluzione 3x3 dilatata con rate $r=2$ ha lo stesso campo recettivo di una normale convoluzione 5x5. Tuttavia, il numero di parametri del modello con dilatazione può essere notevolmente ridotto. Un kernel $k\times k$ mantiene, infatti, $k\times k$ parametri avendo però un campo recettivo pari a $k_e\times k_e$ con $k_e=k+(k-1)(r-1)$.
 
-\subsection{Convoluzioni 1x1}
-
 \section{la rete neurale selezionata}
+L'architettura della rete neurale convoluzionale utilizzata in questo lavoro di tesi è formato da una rete neurale residuale con bottleneck, batch normalization e convoluzione dilatata. Il blocco residuale utilizzato è il seguente: 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.6\columnwidth]{my_res_block.png}
+    \caption[Diagramma del blocco residuale]{Diagramma del blocco residuale}
+\end{figure}\\
+
 
 \section{Il processo di training}
 \subsection{Loss function e ottimizzazione}

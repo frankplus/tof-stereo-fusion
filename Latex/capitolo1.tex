@@ -14,7 +14,6 @@ Il sistema di acquisizione è composto da una coppia di telecamere stereo e da u
     \centering
     \includegraphics[width=0.5\columnwidth]{tof_stereo_acquisition_system}
     \caption[Sistema di acquisizione ToF-Stereo]{Rappresentazione del sistema di acquisizione ToF-Stereo. Il sensore ToF è posizionato sotto la telecamera di riferimento della coppia stereo.}
-    \label{sistema_di_acquisizione}
 \end{figure}
 
 \subsection{Sistema di visione stereo}
@@ -27,7 +26,6 @@ Lo svantaggio maggiore è la dipendenza dei risultati forniti da questi sensori 
     \centering
     \includegraphics[width=0.5\columnwidth]{ZED}
     \caption[Sensore di visione stereo]{Sensore stereo ZED}
-    \label{zed}
 \end{figure}
 
 \subsection{Sensore Time-Of-Flight}
@@ -38,7 +36,6 @@ sfasato e attenuato in ampiezza.
     \centering
     \includegraphics[width=0.4\columnwidth]{time-of-flight}
     \caption[Principio time-of-flight]{Segnale sinusoidale trasmesso e corrispondente segnale ricevuto da un sensore ToF}
-    \label{tof}
 \end{figure}\\
 Dispositivi ToF costituiti da un singolo trasmettitore e un singolo ricevitore, vengono tipicamente utilizzati in telemetri laser. Al fine di realizzare una mappa bidimensionale dell'ambiente, un sistema è quello di montare il sensore su una piattaforma roteante, tale configurazione ha trovato l'utilizzo nel campo dell'automobilistica. Il sistema utilizzato in questo lavoro di tesi appartiene bensì alla famiglia dei sensori ToF scanner-less chiamati anche ToF camera.
 \paragraph{ToF camera}
@@ -47,7 +44,6 @@ Nelle ToF camera, gli impulsi luminosi sono segnali infrarossi inviati tramite L
     \centering
     \includegraphics[width=0.3\columnwidth]{kinect}
     \caption[Microsoft Kinect]{Il Microsoft Kinect è un esempio di ToF Camera}
-    \label{zed}
 \end{figure}\\
 I vantaggi maggiori sono, al contrario delle telecamere stereo, l'indipendenza dal contenuto della scena, e la maggiore rapidità poiché non richiede algoritmi particolari per il calcolo della disparità. \\
 Tuttavia, la tecnologia non è esente da alcune limitazioni: 
@@ -73,7 +69,6 @@ Le reti neurali artificiali (in inglese \textit{artificial neural network}, ANN)
     \centering
     \includegraphics[width=0.5\columnwidth]{biological_neuron}
     \caption[Neurone biologico]{Neurone biologico}
-    \label{biological_neuron}
 \end{figure}
 \paragraph{Percettrone}
 Il più semplice modello dei neuroni artificiali è il \textit{percettrone}. 
@@ -81,7 +76,6 @@ Il più semplice modello dei neuroni artificiali è il \textit{percettrone}.
     \centering
     \includegraphics[width=0.5\columnwidth]{perceptron}
     \caption[Percettrone]{Schema di un percettrone}
-    \label{biological_neuron}
 \end{figure}
 Esso prende in input un vettore di valori reali e ne effettua una combinazione lineare. Il risultato viene infine passato ad una funzione, detta funzione di attivazione, che restituisce l'output del neurone. Il modello complessivo può essere descritto dalla seguente formula: 
 $$y=\sigma(\sum_{i} w_{i}x_{i}+b)$$
@@ -92,7 +86,6 @@ Le reti neurali artificiali sono tipicamente organizzati in più strati, i nodi 
     \centering
     \includegraphics[width=0.5\columnwidth]{DNN}
     \caption[Deep Neural Network]{Rappresentazione di una rete neurale profonda}
-    \label{DNN}
 \end{figure}
 
 \subsection{Reti neurali convoluzionali}
@@ -104,7 +97,6 @@ La convoluzione viene effettuata tra l'input di uno strato e uno o più filtri, 
     \centering
     \includegraphics[width=0.5\columnwidth]{convolution}
     \caption[Esempio di convoluzione]{illustrazione della operazione di convoluzione con un filtro}
-    \label{convolution}
 \end{figure}\\
 Il principio di convoluzione è fondamentale: oltre a mantenere limitato il numero di parametri, esso fornisce una proprietà di invarianza alla traslazione. Di fatto, lo stesso filtro viene applicato su tutta l'immagine, ciò permette di rilevare una particolarità nell'immagine ovunque essa sia, indipendentemente dalla sua posizione. 
 \paragraph{Funzioni di attivazione}
@@ -113,6 +105,5 @@ Analogamente alle reti neurali tradizionali, anche nelle CNN vengono usate le fu
     \centering
     \includegraphics[width=0.3\columnwidth]{relu}
     \caption[Funzione di attivazione relu]{funzione di attivazione ReLU}
-    \label{relu}
 \end{figure}
 La funzione di attivazione più utilizzata in questo campo negli ultimi anni è il rettificatore lineare (\textit{Rectified Linear Unit}, ReLU). Questa, rispetto ad altre funzioni come la tangente iperbolica o la sigmoide, porta ad un processo di allenamento tendenzialmente più rapido.
