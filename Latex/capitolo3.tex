@@ -41,7 +41,8 @@ L'architettura della rete neurale convoluzionale utilizzata in questo lavoro di 
     \centering
     \includegraphics[width=0.6\columnwidth]{my_res_block.png}
     \caption[Diagramma del blocco residuale]{Diagramma del blocco residuale}
-\end{figure}
+\end{figure}\\
+
 
 \section{Il processo di training}
 \subsection{Loss function e ottimizzazione}
@@ -49,7 +50,9 @@ L'architettura della rete neurale convoluzionale utilizzata in questo lavoro di 
 Le due funzioni di loss valutate in questo lavoro sono le norme l1 e l2, detti anche \textit{mean absolute error} e \textit{mean squared error}.
 $$MAE=\frac{1}{n} \sum_{j=1}^{n} |y_j-\hat{y_j}|$$
 $$MSE=\frac{1}{n} \sum_{j=1}^{n} (y_j-\hat{y_j})^2$$
-Da un veloce confronto, le due norme danno simili risultati sperimentali. È stato deciso di utilizzare la norma l2 che si tratta anche della loss function maggiormente utilizzata.
+Da un veloce confronto, le due norme danno risultati sperimentali simili. È stato deciso di utilizzare la norma l2, una delle loss function maggiormente utilizzate.
+
+\paragraph{Ottimizzazione} Il training è stato effettuato con algoritmo di ottimizzazione \textit{Adam}. Questo metodo di ottimizzazione è una estensione della discesa stocastica del gradiente che ha visto un largo utilizzo in molte applicazioni del deep learning nella computer vision e nell'elaborazione del linguaggio naturale. Il nome \textit{Adam} deriva da \textit{adaptive moment estimation}. Questo metodo combina i vantaggi di AdaGrad e RMSProp, modificando i parametri di learning rate in modo adattivo in base alle stime dei momenti di primo e secondo ordine dei gradienti. Il learning rate scelto è $lr=0.001$ mentre i fattori di decadimento impostati sono $\beta_1=0.9$ e $\beta_2=0.999$
 
 \subsection{Inizializzazione delle variabili}
 \subsection{Iperparametri}
