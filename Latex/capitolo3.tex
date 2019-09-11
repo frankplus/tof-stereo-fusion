@@ -42,7 +42,12 @@ L'architettura della rete neurale convoluzionale utilizzata in questo lavoro di 
     \includegraphics[width=0.6\columnwidth]{my_res_block.png}
     \caption[Diagramma del blocco residuale]{Diagramma del blocco residuale}
 \end{figure}\\
-
+La CNN differisce dalla ResNet per l'assenza dello strato finale \textit{fully connected}, si tratta quindi di una rete \textit{fully convolutional} che ha come output una singola feature map con la stessa risoluzione delle immagini in input. L'architettura selezionata è una concatenazione di sei blocchi residuali, seguito da una convoluzione che combina le 128 feature map restituendo l'immagine risultante.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1\columnwidth]{net_scheme.png}
+    \caption[Architettura della CNN]{Diagramma della CNN. Per sintesi non ho incluso gli strati di normalizzazione e rettificazione lineare.}
+\end{figure}
 
 \section{Il processo di training}
 \subsection{Loss function e ottimizzazione}
