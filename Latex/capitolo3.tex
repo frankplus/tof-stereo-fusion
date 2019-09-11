@@ -36,16 +36,22 @@ Il vantaggio della convoluzione dilatata è la possibilità di catturare più in
 In realtà, anche utilizzando un filtro di dimensioni maggiori si ha un receptive field allargato, ad esempio una convoluzione 3x3 dilatata con rate $r=2$ ha lo stesso campo recettivo di una normale convoluzione 5x5. Tuttavia, il numero di parametri del modello con dilatazione può essere notevolmente ridotto. Un kernel $k\times k$ mantiene, infatti, $k\times k$ parametri avendo però un campo recettivo pari a $k_e\times k_e$ con $k_e=k+(k-1)(r-1)$.
 
 \section{la rete neurale selezionata}
-L'architettura della rete neurale convoluzionale utilizzata in questo lavoro di tesi è formato da una rete neurale residuale con bottleneck, batch normalization e convoluzione dilatata. Il blocco residuale utilizzato è il seguente: 
+L'architettura della rete neurale convoluzionale utilizzata in questo lavoro di tesi è formato da una rete neurale residuale basata sull'architettura ResNet-50. Il blocco residuale utilizzato sfrutta il bottleneck, il batch normalization e la convoluzione dilatata.
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.6\columnwidth]{my_res_block.png}
     \caption[Diagramma del blocco residuale]{Diagramma del blocco residuale}
 \end{figure}\\
-
+La CNN differisce dalla ResNet per l'assenza dello strato finale \textit{fully connected}, si tratta quindi di una rete \textit{fully convolutional} che ha come output una singola feature map con la stessa risoluzione delle immagini in input. L'architettura selezionata è una concatenazione di sei blocchi residuali, seguito da una convoluzione che combina le 128 feature map restituendo l'immagine risultante.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1\columnwidth]{net_scheme.png}
+    \caption[Architettura della CNN]{Diagramma della CNN. Per sintesi non ho incluso gli strati di normalizzazione e rettificazione lineare.}
+\end{figure}
 
 \section{Il processo di training}
 \subsection{Loss function e ottimizzazione}
+
 \subsection{Inizializzazione delle variabili}
 \subsection{Iperparametri}
 batch size e learning rate
