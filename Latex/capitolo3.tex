@@ -60,6 +60,25 @@ Da un veloce confronto, le due norme danno risultati sperimentali simili. È sta
 \paragraph{Ottimizzazione} Il training è stato effettuato con algoritmo di ottimizzazione \textit{Adam}. Questo metodo di ottimizzazione è una estensione della discesa stocastica del gradiente che ha visto un largo utilizzo in molte applicazioni del deep learning nella computer vision e nell'elaborazione del linguaggio naturale. Il nome \textit{Adam} deriva da \textit{adaptive moment estimation}. Questo metodo combina i vantaggi di AdaGrad e RMSProp, modificando i parametri di learning rate in modo adattivo in base alle stime dei momenti di primo e secondo ordine dei gradienti. Il learning rate scelto è $lr=0.001$ mentre i fattori di decadimento impostati sono $\beta_1=0.9$ e $\beta_2=0.999$
 
 \subsection{Inizializzazione delle variabili}
+L'inizializzazione dei pesi della rete neurale è una delicata operazione che se non effettuata bene potrebbe impedire la convergenza della rete durante l'apprendimento. Infatti, se i pesi vengono inizializzati troppo piccoli allora andando in profondità nella rete il segnale comincia ad attenuarsi, fino a diventare inutilizzabile. D'altra parte, se i pesi sono troppo grandi allora il segnale in ingresso si amplifica fino a saturare i neuroni. Impostare i pesi a zero ha poco senso in quanto renderebbe la rete equivalente a un modello lineare. Perciò la soluzione è inizializzare i pesi attraverso generazioni casuali secondo una certa distribuzione adeguata.\\
+La distribuzione utilizzata in questo lavoro è quello proposto da Xavier \cite{xavier}. L'idea è quella di utilizzare una distribuzione gaussiana con media nulla e una certa varianza finita. Consideriamo un neurone lineare:
+$$y = w_1 x_1 + w_2 x_2 + ... + w_N x_N + b$$
+Mano a mano che si processano i vari strati, vogliamo che la varianza rimanga la stessa. Questo aiuta ad evitare che il segnale esploda oppure che si attenui verso lo zero. In altre parole vogliamo inizializzare i pesi in modo che la varianza rimanga uguale per $x$ e $y$.\\
+Calcoliamo ora la varianza di $y$:
+$$Var(y) = Var(w_1x_1 + w_2x_2 + ... + w_Nx_N + b)$$
+Assumiamo che le variabili $x_i$ siano indipendenti e calcoliamo le varianze dei termini all'interno delle parentesi di destra. Abbiamo:
+$$Var(w_ix_i) = E(x_i)^2Var(w_i) + E(w_i)^2Var(x_i) + Var(w_i)Var(x_i)$$
+Abbiamo assunto che gli input e i pesi abbiano media nulla, perciò abbiamo:
+$$Var(w_ix_i) = Var(w_i)Var(x_i)$$
+Notiamo che $b$ è costante perciò sparisce. Sostituiamo nell'equazione iniziale:
+$$Var(y) = Var(w_1)Var(x_1) + ... + Var(w_N)Var(x_N)$$
+Dato che sono identicamente distribuiti, possiamo scrivere:
+$$Var(y) = N * Var(w_i) * Var(x_i)$$
+Perciò, se vogliamo che la varianza di y sia uguale alla varianza di x, allora il termine $N*Var(w_i)$ deve valere 1. Dunque:
+$$N * Var(wi) = 1$$
+$$Var(w_i) = \frac{1}{N}$$
+Abbiamo trovato la formula di \textbf{inizializzazione di Xavier}, non dobbiamo fare altro che inizializzare i pesi secondo una normale a media nulla e varianza pari all'inverso del numero di connessioni in ingresso.
+
 \subsection{Iperparametri}
 batch size e learning rate
 \subsection{Early stopping}
