@@ -11,7 +11,7 @@ Inoltre, le informazioni sulla profondità del sensore ToF vengono riproiettate 
 \paragraph{Calcolo della disparità}
 Il sensore Time-of-Flight e il sensore stereo rappresentano la scena 3D in modo differente. Come già visto, il sensore a visione stereoscopica ritorna una mappa di disparità dove ogni pixel rappresenta la differenza di posizione tra i punti omologhi nelle due immagini. La ToF camera d'altro canto ritorna una mappa di profondità nella quale ogni pixel esprime la distanza tra il sensore e il corrispondente punto sulla scena. La disparità e la profondità sono legate da una relazione di proporzionalità inversa:
 $$z=\frac{b\cdot f}{d}$$
-dove $z$ è la distanza, $d$ è la disparità, $b$ è la baseline dello stereo e $f$ è la lunghezza focale delle telecamere. La disparità è stata scelta come unità di misura comune, dunque la mappa di profondità del ToF viene convertita in una mappa di disparità in modo tale da rendere omogenee le rappresentazioni dei due sensori.
+dove $z$ è la distanza, $d$ è la disparità, $b$ è la baseline dello stereo e $f$ è la lunghezza focale delle telecamere \cite{rif1}. La disparità è stata scelta come unità di misura comune, dunque la mappa di profondità del ToF viene convertita in una mappa di disparità in modo tale da rendere omogenee le rappresentazioni dei due sensori.
 
 \paragraph{Data augmentation}
 Per \textit{data augmentation} si intende una tecnica che consiste nell'apportare alcune modifiche casuali nelle istanze del dataset, come rotazioni, ritagli, traslazioni e altre operazioni di image processing. Lo scopo è quello di ampliare il numero di esempi nel training set per una maggiore robustezza e variabilità, e di conseguenza ridurre le probabilità di overfitting.\\
