@@ -38,6 +38,7 @@ pdfkeywords=tesi laurea LaTeX}
 \newcommand{\@autore}{}
 \newcommand{\@laureandoOlaureanda}{?}
 \newcommand{\@dedica}{?}
+\newcommand{\@datalaurea}{?}
 
 % definizione e specifica delle macro... tra parentesi quadre il numero di argomenti attesi.
 \newcommand{\facolta}[1]{%
@@ -72,6 +73,8 @@ pdfkeywords=tesi laurea LaTeX}
 \newcommand{\dedica}[1]{%
   \renewcommand{\@dedica}{#1}}
 \newcommand{\data}[1]{\date{#1}}
+\newcommand{\datalaurea}[1]{%
+  \renewcommand{\@datalaurea}{#1}}
 
 \newcommand{\clearemptydoublepage}{\newpage{\pagestyle{empty}%
   \cleardoublepage}}
@@ -118,6 +121,14 @@ pdfkeywords=tesi laurea LaTeX}
 				\@titolo\cr}}
 				\end{Huge}}
 			\bigskip\vfill
+			\uppercase{Anno Accademico \@annoaccademico}\\
+			\@datalaurea
+		\end{center}
+
+		\begin{center}
+			\bigskip
+			%\rule{9cm}{.4pt}\\
+			\medskip
 			\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}l@{}}
 				Relatore:&\@laureandoOlaureanda:\\
 				\vtop{\halign{\strut\hfil##\hfil\cr
@@ -126,6 +137,7 @@ pdfkeywords=tesi laurea LaTeX}
 				\@autore\cr}}%
 			\end{tabular*}
 		\end{center}
+
 		\ifthenelse{\equal{\@correlatore}{?}}{}%
 		{\noindent \ifthenelse{\equal{\@correlatoreDue}{?}}%
         {Correlatore}{Correlatori}:\newline
@@ -133,12 +145,6 @@ pdfkeywords=tesi laurea LaTeX}
 		\@correlatore%\cr%
 		\ifthenelse{\equal{\@correlatoreDue}{?}}%
         {\cr}{\cr\@correlatoreDue\cr}}}}%
-		\begin{center}
-			\vfill
-			\rule{9cm}{.4pt}\\
-			\medskip
-			\uppercase{Anno Accademico \@annoaccademico}\\
-		\end{center}
 	\end{large}
 \end{sffamily}
 \clearemptydoublepage

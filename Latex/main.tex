@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper,oneside,italian]{book} %twoside,
+\documentclass[12pt,a4paper,twoside,italian]{book} %twoside,
 
 % Usare "oneside" invece di "twoside"
 % nelle bozze, per risparmiare carta:
@@ -64,6 +64,16 @@
 % altri pacchetti
 \usepackage{float}
 \usepackage{xcolor}
+\usepackage{emptypage} % per nascondere la numerazione nelle pagine bianche
+\usepackage{url}
+
+\makeatletter
+\renewcommand\chapter{\if@openright\cleardoublepage\else\clearpage\fi
+                    \thispagestyle{empty}% original style: plain
+                    \global\@topnum\z@
+                    \@afterindentfalse
+                    \secdef\@chapter\@schapter}
+\makeatother
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -270,6 +280,7 @@
   \titolo{Fusione di dati \\Stereo e Time-of-Flight mediante \\tecniche di Deep Learning}
   \laureando{Francesco Pham}
   \annoaccademico{2018-2019}
+  \datalaurea{25 SETTEMBRE 2019}
   \facolta{Ingegneria dell'Informazione} % (default)
 %  \corsodilaurea{NomeCorsoDiLaurea} % per la laurea vecchio ordinamento
  \corsodilaureatriennale{Ingegneria Informatica}
@@ -277,7 +288,7 @@
   \relatore[Prof.]{Pietro Zanuttigh}
 	
 	% in questo caso la macro usa di default il titolo di prof... per altri usi utilizzare []
-  %\correlatore[]{}
+  \correlatore[Ing.]{Gianluca Agresti}
 % \correlatoreDue{Secondo Correlatore}
   \dedica{Ai miei genitori, \\che mi hanno sempre sostenuto.} % (facoltativo)
 
